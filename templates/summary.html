@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Summary</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Expense Summary</h2>
+    <form method="get" action="/summary" style="margin-bottom: 20px;">
+      <label for="month">Select Month:</label>
+      <select name="month" id="month" onchange="this.form.submit()">
+        {% for m in months %}
+          <option value="{{ m }}" {% if m == selected_month %}selected{% endif %}>{{ m }}</option>
+        {% endfor %}
+      </select>
+    </form>
+    {% if message %}
+      <div class="alert alert-success" style="color: green; margin-bottom: 15px;">{{ message }}</div>
+    {% endif %}
+    <p><strong>Total Spent:</strong> ₹{{ total }}</p>
+    <p><strong>Monthly Budget:</strong> ₹{{ budget }}</p>
+    <p><strong>Balance Left:</strong> ₹{{ balance }}</p>
+    {% if budget == 0 %}
+      <div class="alert alert-warning" style="color: orange; margin-bottom: 15px;">⚠️ No budget set for this month. Please add a budget to track your balance.</div>
+    {% else %}
+      {% if over_budget %}
+        <div class="alert alert-danger" style="color: red; margin-bottom: 15px;">⚠️ You have exceeded your monthly budget! Your spending is ₹{{ total }} which is ₹{{ total-budget }} over your budget of ₹{{ budget }}.</div>
+      {% else %}
+        <div class="alert alert-success" style="color: green; margin-bottom: 15px;">✅ You are under budget by ₹{{ balance }}. Keep it up!</div>
+      {% endif %}
+    {% endif %}
+
+
+
+
+
+    <canvas id="expenseChart" width="320" height="180"></canvas>
+
+    <ul class="expense-list">
+      {% if expenses|length == 0 %}
+        <li>No expenses found.</li>
+      {% else %}
+        {% for exp in expenses %}
+          <li><span style="font-weight:600;">{{ exp.category }}</span> — ₹{{ exp.amount }} <span style="color:#888;font-size:0.98em;">on {{ exp.date.strftime('%d %b %Y') }}</span></li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+
+    <a href="/" class="btn">Back</a>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('expenseChart').getContext('2d');
+    const chartLabels = {{ categories.keys() | list | safe }};
+    const chartData = {{ categories.values() | list | safe }};
+    // If the only label is 'No Data', use a gray color, else use the normal palette
+    let chartColors = [];
+    if (chartLabels.length === 1 && chartLabels[0] === 'No Data') {
+      chartColors = ['#cccccc'];
+    } else {
+      chartColors = ['#ff00ff', '#ff66ff', '#cc33ff', '#ff99ff', '#ff33cc'];
+    }
+    const data = {
+      labels: chartLabels,
+      datasets: [{
+        label: 'Spending by Category',
+        data: chartData,
+        backgroundColor: chartColors
+      }]
+    };
+    new Chart(ctx, {
+      type: 'pie',
+      data: data,
+      options: {
+        plugins: {
+          legend: {
+            labels: {
+              // Show 'No Data' in gray
+              color: '#333'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

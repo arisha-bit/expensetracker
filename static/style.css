@@ -1,0 +1,117 @@
+
+
+body {
+  background: #e6e6fa;
+  color: #222;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 40px;
+  position: relative;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '₹   💸   💰   🪙   ₹   💸   💰   🪙   ₹   💸   💰   🪙   ₹   💸   💰   🪙';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  font-size: 48px;
+  color: #e0e7ef;
+  opacity: 0.18;
+  z-index: 0;
+  white-space: pre;
+  pointer-events: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1.5em;
+  background: repeating-linear-gradient(120deg, transparent 0 40px, #f4f6fb 40px 80px);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  padding: 32px 28px 28px 28px;
+  border-radius: 16px;
+  max-width: 520px;
+  margin: 32px auto;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(60,60,60,0.06);
+  text-align: center;
+}
+/* Chart size smaller */
+#expenseChart {
+  max-width: 320px;
+  max-height: 180px;
+  margin: 0 auto 18px auto;
+  display: block;
+}
+
+/* Cool font for expenses */
+.expense-list {
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  font-size: 1.08em;
+  color: #7c3aed;
+  margin: 0 auto 18px auto;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.expense-list li {
+  margin: 8px 0;
+  letter-spacing: 0.5px;
+}
+
+/* Center welcome page */
+.welcome-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+
+textarea, input {
+  width: 92%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1.5px solid #d1d5db;
+  outline: none;
+  font-size: 16px;
+  background: #f8fafc;
+  color: #222;
+  transition: border 0.2s;
+}
+textarea:focus, input:focus {
+  border: 1.5px solid #7c3aed;
+}
+
+
+.btn {
+  background: #7c3aed;
+  color: #fff;
+  padding: 10px 22px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s, box-shadow 0.2s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(124,58,237,0.08);
+}
+.btn:hover {
+  background: #5b21b6;
+}
+
+.success {
+  color: #22c55e;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
