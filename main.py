@@ -12,7 +12,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 # MongoDB setup
-client = MongoClient("mongodb+srv://arisha31:arudontask31@cluster0.4kp9pe0.mongodb.net/")
+client = MongoClient("mongodb url")
 db = client["expense_tracker"]
 expenses = db["expenses"]
 budgets = db["budgets"]
